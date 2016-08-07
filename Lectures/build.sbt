@@ -1,1 +1,3 @@
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "4.0.0")
+scalaVersion := "2.11.7"
+
+scalacOptions ++= Seq("-deprecation")

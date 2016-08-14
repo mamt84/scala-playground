@@ -11,7 +11,5 @@ object test {
   val until = Huffman.until(Huffman.singleton, Huffman.combine)(ordered)
                                                   //> until  : List[patmat.Huffman.CodeTree] = List(Fork(Fork(Leaf(b,2),Leaf(c,3),
                                                   //| List(b, c),5),Leaf(a,6),List(b, c, a),11))
-	val decodedSecret = Huffman.decodedSecret //> decodedSecret  : List[Char] = List(h, h, h, h, h, h, h, h, h, h, h, h, h, h,
-                                                  //|  h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, 
-                                                  //| h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h, h)
+	val decodedSecret = Huffman.decodedSecret //> decodedSecret  : List[Char] = List(h, u, f, f, m, a, n, e, s, t, c, o, o)
 }

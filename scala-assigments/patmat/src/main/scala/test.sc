@@ -21,6 +21,8 @@ object test {
                                                   //|  1, 0, 1)
                                                   
   val enfficientEncoded = Huffman.quickEncode(Huffman.frenchCode)(decodedSecret)
-                                                  //> enfficientEncoded  : List[patmat.Huffman.Bit] = List(1, 1, 1, 1, 1, 0, 0, 1,
-                                                  //|  1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1)
+                                                  //> enfficientEncoded  : List[patmat.Huffman.Bit] = List(0, 0, 1, 1, 1, 0, 1, 0,
+                                                  //|  1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 
+                                                  //| 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0
+                                                  //| , 0, 1, 0, 1)
 }

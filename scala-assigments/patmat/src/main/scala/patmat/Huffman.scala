@@ -256,9 +256,9 @@ object Huffman {
    */
   def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = {
 
-    def prependBit(bit: Bit, table: CodeTable) = table match {
-      case (c, list) :: xs => (c, bit :: list) :: xs
-      case Nil             => Nil
+    def prependBit(bit: Bit, table: CodeTable): CodeTable = table match {
+      case List((c, list)) => List((c, bit :: list))
+      case (c, list) :: xs => (c, bit :: list) :: prependBit(bit, xs)
     }
 
     prependBit(0, a) ::: prependBit(1, b)

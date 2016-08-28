@@ -4,7 +4,7 @@ import forcomp.Anagrams
 object test {
 
   val w = "aabcs"                                 //> w  : String = aabcs
-  val sentence = List(w, "other")                 //> sentence  : List[String] = List(aabcs, other)
+  val sentence = List("Linux", "Rulez")           //> sentence  : List[String] = List(Linux, Rulez)
 
   Anagrams.combinations(List(('a', 3), ('b', 4), ('c', 2)))
                                                   //> res0: List[forcomp.Anagrams.Occurrences] = List(List(), List((a,1)), List((a
@@ -25,7 +25,7 @@ object test {
                                                   //> x  : List[(Char, Int)] = List((a,2), (d,2), (l,2), (r,2))
   val y = List(('d', 2), ('r', 1))                //> y  : List[(Char, Int)] = List((d,2), (r,1))
   Anagrams.subtract(x, y)                         //> res1: forcomp.Anagrams.Occurrences = List((a,2), (l,2), (r,1))
-  
+
   Anagrams.dictionary                             //> res2: List[forcomp.Anagrams.Word] = List(Aarhus, Aaron, Ababa, aback, abaft,
                                                   //|  abandon, abandoned, abandoning, abandonment, abandons, abase, abased, abase
                                                   //| ment, abasements, abases, abash, abashed, abashes, abashing, abasing, abate,
@@ -40,7 +40,7 @@ object test {
                                                   //| ctly, abjectness, abjure, abjured, abjures, abjuring, ablate, ablated, ablat
                                                   //| es, ablating, ablation, 
                                                   //| Output exceeds cutoff limit.
-   Anagrams.dictionaryByOccurrences               //> res3: Map[forcomp.Anagrams.Occurrences,List[forcomp.Anagrams.Word]] = Map(Li
+  Anagrams.dictionaryByOccurrences                //> res3: Map[forcomp.Anagrams.Occurrences,List[forcomp.Anagrams.Word]] = Map(Li
                                                   //| st((e,1), (i,1), (l,1), (r,1), (t,2)) -> List(litter), List((a,1), (d,1), (e
                                                   //| ,1), (g,2), (l,1), (r,1)) -> List(gargled), List((a,1), (e,1), (h,1), (i,1),
                                                   //|  (k,1), (n,1), (s,3)) -> List(shakiness), List((e,2), (g,1), (n,1)) -> List(
@@ -54,19 +54,18 @@ object test {
                                                   //| (a,1), (g,1), (i,3), (l,1), (n,2), (t,1), (z,1)) -> List(Latinizing), List((
                                                   //| a,1), (m,1), (n,1), (o,3
                                                   //| Output exceeds cutoff limit.
-  
-  Anagrams.sentenceAnagrams(List("Linux Rulez"))  //> res4: List[forcomp.Anagrams.Sentence] = List(List(), List(), List(), List(),
-                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
-                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
-                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
-                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
-                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
-                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
-                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
-                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
-                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
-                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
-                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
-                                                  //| t(), List(), List(), Lis
-                                                  //| Output exceeds cutoff limit.
+  sentence                                        //> res4: List[String] = List(Linux, Rulez)
+  val occ = Anagrams.sentenceOccurrences(sentence)//> occ  : forcomp.Anagrams.Occurrences = List((e,1), (i,1), (l,2), (n,1), (r,1)
+                                                  //| , (u,2), (x,1), (z,1))
+  Anagrams.combinations(occ).length               //> res5: Int = 576
+
+  val sentence2 = List("Eli", "lie", "lien", "line")
+                                                  //> sentence2  : List[String] = List(Eli, lie, lien, line)
+  Anagrams.sentenceAnagrams(sentence)             //> res6: List[forcomp.Anagrams.Sentence] = List(List(rulez, Linux), List(Rex, L
+                                                  //| in, Zulu), List(Rex, nil, Zulu), List(Rex, Uzi, null), List(Rex, null, Uzi),
+                                                  //|  List(Rex, Zulu, Lin), List(Rex, Zulu, nil), List(Lin, Rex, Zulu), List(Lin,
+                                                  //|  Zulu, Rex), List(nil, Rex, Zulu), List(nil, Zulu, Rex), List(Linux, rulez),
+                                                  //|  List(Uzi, Rex, null), List(Uzi, null, Rex), List(null, Rex, Uzi), List(null
+                                                  //| , Uzi, Rex), List(Zulu, Rex, Lin), List(Zulu, Rex, nil), List(Zulu, Lin, Rex
+                                                  //| ), List(Zulu, nil, Rex))
 }

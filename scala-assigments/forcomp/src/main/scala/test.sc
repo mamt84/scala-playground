@@ -1,38 +1,72 @@
 import forcomp.Anagrams._
+import forcomp.Anagrams
 
 object test {
-  def wordOccurrences(w: Word): Occurrences = ((w.toLowerCase() groupBy ((x: Char) => x)).toList map (x => (x._1, x._2.length()))).sorted
-                                                  //> wordOccurrences: (w: forcomp.Anagrams.Word)forcomp.Anagrams.Occurrences
-  def combinations(occurrences: Occurrences): List[Occurrences] = {
-    def innerCombinations(occurrences: Occurrences): List[Occurrences] = occurrences match {
-      case List()        => List()
-      case (c, f) :: Nil => List() ++ (for (n <- 1 to f) yield List((c, n))).toList
-      case x :: xs       => List() ++ (for { n <- 1 to x._2 } yield List((x._1, n))).toList ++ (for { e <- innerCombinations(xs); n <- 1 to x._2 } yield (x._1, n) :: e).toList ++ innerCombinations(xs)
-    }
-    List() :: innerCombinations(occurrences)
-  }                                               //> combinations: (occurrences: forcomp.Anagrams.Occurrences)List[forcomp.Anagra
-                                                  //| ms.Occurrences]
-
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = {
-    val yMap = y.toMap withDefaultValue 0
-    (for { (xc, xn) <- x } yield (xc, xn - yMap(xc))) filter (elem => elem._2 > 0)
-  }                                               //> subtract: (x: forcomp.Anagrams.Occurrences, y: forcomp.Anagrams.Occurrences)
-                                                  //| forcomp.Anagrams.Occurrences
 
   val w = "aabcs"                                 //> w  : String = aabcs
-  ((w.toLowerCase() groupBy ((x: Char) => x)).toList map (x => (x._1, x._2.length()))).sortWith((a, b) => a._1.compareTo(b._1) < 0)
-                                                  //> res0: List[(Char, Int)] = List((a,2), (b,1), (c,1), (s,1))
   val sentence = List(w, "other")                 //> sentence  : List[String] = List(aabcs, other)
-  sentence.flatten mkString ""                    //> res1: String = aabcsother
 
-  List("ate", "eat", "tea") groupBy ((w: Word) => wordOccurrences(w))
-                                                  //> res2: scala.collection.immutable.Map[forcomp.Anagrams.Occurrences,List[Stri
-                                                  //| ng]] = Map(List((a,1), (e,1), (t,1)) -> List(ate, eat, tea))
-  combinations(List(('a', 2), ('b', 2)))          //> res3: List[forcomp.Anagrams.Occurrences] = List(List(), List((a,1)), List((
-                                                  //| a,2)), List((a,1), (b,1)), List((a,2), (b,1)), List((a,1), (b,2)), List((a,
-                                                  //| 2), (b,2)), List((b,1)), List((b,2)))
+  Anagrams.combinations(List(('a', 3), ('b', 4), ('c', 2)))
+                                                  //> res0: List[forcomp.Anagrams.Occurrences] = List(List(), List((a,1)), List((a
+                                                  //| ,2)), List((a,3)), List((a,1), (b,1)), List((a,2), (b,1)), List((a,3), (b,1)
+                                                  //| ), List((a,1), (b,2)), List((a,2), (b,2)), List((a,3), (b,2)), List((a,1), (
+                                                  //| b,3)), List((a,2), (b,3)), List((a,3), (b,3)), List((a,1), (b,4)), List((a,2
+                                                  //| ), (b,4)), List((a,3), (b,4)), List((a,1), (b,1), (c,1)), List((a,2), (b,1),
+                                                  //|  (c,1)), List((a,3), (b,1), (c,1)), List((a,1), (b,2), (c,1)), List((a,2), (
+                                                  //| b,2), (c,1)), List((a,3), (b,2), (c,1)), List((a,1), (b,3), (c,1)), List((a,
+                                                  //| 2), (b,3), (c,1)), List((a,3), (b,3), (c,1)), List((a,1), (b,4), (c,1)), Lis
+                                                  //| t((a,2), (b,4), (c,1)), List((a,3), (b,4), (c,1)), List((a,1), (b,1), (c,2))
+                                                  //| , List((a,2), (b,1), (c,2)), List((a,3), (b,1), (c,2)), List((a,1), (b,2), (
+                                                  //| c,2)), List((a,2), (b,2), (c,2)), List((a,3), (b,2), (c,2)), List((a,1), (b,
+                                                  //| 3), (c,2)), List((a,2), (b,3), (c,2)), List((a,3), (b,3), (c,2)), List((a,1)
+                                                  //| , (b,4), (c,2)), List((a
+                                                  //| Output exceeds cutoff limit.
   val x = List(('a', 2), ('d', 2), ('l', 2), ('r', 2))
                                                   //> x  : List[(Char, Int)] = List((a,2), (d,2), (l,2), (r,2))
   val y = List(('d', 2), ('r', 1))                //> y  : List[(Char, Int)] = List((d,2), (r,1))
-  subtract(x, y)                                  //> res4: forcomp.Anagrams.Occurrences = List((a,2), (l,2), (r,1))
+  Anagrams.subtract(x, y)                         //> res1: forcomp.Anagrams.Occurrences = List((a,2), (l,2), (r,1))
+  
+  Anagrams.dictionary                             //> res2: List[forcomp.Anagrams.Word] = List(Aarhus, Aaron, Ababa, aback, abaft,
+                                                  //|  abandon, abandoned, abandoning, abandonment, abandons, abase, abased, abase
+                                                  //| ment, abasements, abases, abash, abashed, abashes, abashing, abasing, abate,
+                                                  //|  abated, abatement, abatements, abater, abates, abating, Abba, abbe, abbey, 
+                                                  //| abbeys, abbot, abbots, Abbott, abbreviate, abbreviated, abbreviates, abbrevi
+                                                  //| ating, abbreviation, abbreviations, Abby, abdomen, abdomens, abdominal, abdu
+                                                  //| ct, abducted, abduction, abductions, abductor, abductors, abducts, Abe, abed
+                                                  //| , Abel, Abelian, Abelson, Aberdeen, Abernathy, aberrant, aberration, aberrat
+                                                  //| ions, abet, abets, abetted, abetter, abetting, abeyance, abhor, abhorred, ab
+                                                  //| horrent, abhorrer, abhorring, abhors, abide, abided, abides, abiding, Abidja
+                                                  //| n, Abigail, Abilene, abilities, ability, abject, abjection, abjections, abje
+                                                  //| ctly, abjectness, abjure, abjured, abjures, abjuring, ablate, ablated, ablat
+                                                  //| es, ablating, ablation, 
+                                                  //| Output exceeds cutoff limit.
+   Anagrams.dictionaryByOccurrences               //> res3: Map[forcomp.Anagrams.Occurrences,List[forcomp.Anagrams.Word]] = Map(Li
+                                                  //| st((e,1), (i,1), (l,1), (r,1), (t,2)) -> List(litter), List((a,1), (d,1), (e
+                                                  //| ,1), (g,2), (l,1), (r,1)) -> List(gargled), List((a,1), (e,1), (h,1), (i,1),
+                                                  //|  (k,1), (n,1), (s,3)) -> List(shakiness), List((e,2), (g,1), (n,1)) -> List(
+                                                  //| gene), List((a,2), (n,1), (t,1), (y,1)) -> List(Tanya), List((a,1), (d,1), (
+                                                  //| e,2), (h,1), (m,1), (n,2), (o,1), (s,3)) -> List(handsomeness), List((a,2), 
+                                                  //| (c,1), (e,2), (k,1), (l,1), (m,1), (p,1), (r,1), (t,1)) -> List(marketplace)
+                                                  //| , List((a,1), (i,1), (l,2), (s,1), (v,1)) -> List(villas), List((d,2), (e,1)
+                                                  //| , (h,2), (n,1), (r,1), (t,1), (u,1)) -> List(hundredth), List((a,3), (b,1), 
+                                                  //| (c,1), (h,1), (i,2), (l,1), (o,1), (p,2), (r,1), (t,1), (y,1)) -> List(appro
+                                                  //| achability), List((d,1), (e,2), (l,1), (s,1), (t,2)) -> List(settled), List(
+                                                  //| (a,1), (g,1), (i,3), (l,1), (n,2), (t,1), (z,1)) -> List(Latinizing), List((
+                                                  //| a,1), (m,1), (n,1), (o,3
+                                                  //| Output exceeds cutoff limit.
+  
+  Anagrams.sentenceAnagrams(List("Linux Rulez"))  //> res4: List[forcomp.Anagrams.Sentence] = List(List(), List(), List(), List(),
+                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
+                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
+                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
+                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
+                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
+                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
+                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
+                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
+                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
+                                                  //| t(), List(), List(), List(), List(), List(), List(), List(), List(), List(),
+                                                  //|  List(), List(), List(), List(), List(), List(), List(), List(), List(), Lis
+                                                  //| t(), List(), List(), Lis
+                                                  //| Output exceeds cutoff limit.
 }
